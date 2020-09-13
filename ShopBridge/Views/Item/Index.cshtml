@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ShopBridge.Models.Item>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>
+            Items
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success pull-right" })
+        </h2>
+    </div>
+</div>
+
+
+<table class="table table-hover table-condensed">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="rows" data-ItemID="@item.ItemID">
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td class="rows" data-ItemID="@item.ItemID">
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td class="rows" data-ItemID="@item.ItemID">
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td style="text-align: right;">
+                    @Html.ActionLink("Remove", "Delete", new { id = item.ItemID }, new { @class = "btn btn-warning" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts{
+<script type="text/javascript">
+        $(document).ready(function () {
+            $("td.rows").click(function () {
+                var url = '@Url.Action("Edit", "Item", new { id = "__param__" })';
+                window.location.href = url.replace('__param__', $(this).data("itemid"));
+            });
+        });
+</script>
+
+}
